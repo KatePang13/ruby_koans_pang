@@ -1,7 +1,10 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+### [ruby koan] about_exception
 
-class AboutExceptions < Neo::Koan
+**exception 继承体系**
 
+- MySpecialError < RuntimeError < StandardError < Exception < Object
+
+```ruby
   class MySpecialError < RuntimeError
   end
   # MySpecialError < RuntimeError < StandardError < Exception < Object
@@ -11,7 +14,21 @@ class AboutExceptions < Neo::Koan
     assert_equal Exception, MySpecialError.ancestors[3]
     assert_equal Object, MySpecialError.ancestors[4]
   end
+```
 
+**exception使用示例**
+
+- 产生异常
+  - `fail  exMsg`
+  - `raise exType, exMsg`
+- 捕获异常
+  - `rescue exType=> ex`
+    - `ex.is_a?(StandardError)`
+    - `ex.message`
+- 总会执行的代码段
+  - `ensure`
+
+```ruby
   def test_rescue_clause
     result = nil
     begin
@@ -64,5 +81,5 @@ class AboutExceptions < Neo::Koan
       raise MySpecialError.new("New instances can be raised directly.")
     end
   end
+```
 
-end
