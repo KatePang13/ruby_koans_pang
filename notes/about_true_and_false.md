@@ -1,6 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+### [ruby koan] about_true_and_false
 
-class AboutTrueAndFalse < Neo::Koan
+- ruby 中 false,nil  是  false
+- 除了false,nil 的其他对象，都是 true
+
+```ruby
   def truth_value(condition)
     if condition
       :true_stuff
@@ -29,5 +32,5 @@ class AboutTrueAndFalse < Neo::Koan
     assert_equal :true_stuff, truth_value("Strings")
     assert_equal :true_stuff, truth_value("")
   end
+```
 
-end
