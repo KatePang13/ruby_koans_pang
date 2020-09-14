@@ -1,7 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+## about_keyword_arguments
 
-class AboutKeywordArguments < Neo::Koan
+**键值对参数**
 
+- 方法中用键来访问对应的参数，参数可以有缺省值
+- 没有缺省值的参数，必须传参，否则会抛出 `ArgumentError`
+
+```ruby
   def method_with_keyword_arguments(one: 1, two: 'two')
     [one, two]
   end
@@ -23,9 +27,11 @@ class AboutKeywordArguments < Neo::Koan
     end
     assert_match(/given 0, expected 1/, exception.message)
   end
+```
 
-  # THINK ABOUT IT:
-  #
-  # Keyword arguments always have a default value, making them optional to the caller
+**[Think about it] Keyword arguments always have a default value, making them optional to the caller**
 
-end
+建议所有的 keyword 参数 都有缺省值，对调用者来说，这些参数就是可选的
+
+
+
