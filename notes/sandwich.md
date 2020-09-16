@@ -50,7 +50,9 @@ count_lines 和 find_line 这2个函数，很相似，只有少许的差别，�
 
 原文是： Aside for C++ programmers: The idiom of capturing allocated pointers in a smart pointer constructor is an attempt to deal with the problem of sandwich code for resource allocation.
 
-上面的代码可以将第一第三部分抽象成一个方法
+
+
+对于ruby,上面的代码可以将第一第三部分抽象成一个方法
 
 ```ruby
   def file_sandwich(file_name)
