@@ -1,28 +1,14 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+### [ruby koan] about_iteration
 
-class AboutIteration < Neo::Koan
+**each**
 
-  # -- An Aside ------------------------------------------------------
-  # Ruby 1.8 stores names as strings. Ruby 1.9 and later stores names
-  # as symbols. So we use a version dependent method "as_name" to
-  # convert to the right format in the koans. We will use "as_name"
-  # whenever comparing to lists of methods.
+- `each`  是  `array` 的一个方法
+- each 后跟一个 block,block有2种形式
+  - { |item| ...}
+  - do |item| ...  end
+- block 可以用  break 终止
 
-  in_ruby_version("1.8") do
-    def as_name(name)
-      name.to_s
-    end
-  end
-
-  in_ruby_version("1.9", "2") do
-    def as_name(name)
-      name.to_sym
-    end
-  end
-
-  # Ok, now back to the Koans.
-  # -------------------------------------------------------------------
-
+```ruby
   def test_each_is_a_method_on_arrays
     assert_equal true, [].methods.include?(as_name(:each))
   end
@@ -52,7 +38,13 @@ class AboutIteration < Neo::Koan
     end
     assert_equal 6, sum
   end
+```
 
+**collect & map**
+
+collect /map  用法相同，用于将一个数组转换成另一个数组，元素一一映射
+
+```ruby
   def test_collect_transforms_elements_of_an_array
     array = [1, 2, 3]
     new_array = array.collect { |item| item + 10 }
@@ -62,7 +54,14 @@ class AboutIteration < Neo::Koan
     another_array = array.map { |item| item + 10 }
     assert_equal [11, 12, 13], another_array
   end
+```
 
+**select & find_all & find**
+
+- select 获取 符合条件的所有元素，find_all 同
+- find  获取符合条件的第一个元素
+
+```ruby
   def test_select_selects_certain_items_from_an_array
     array = [1, 2, 3, 4, 5, 6]
 
@@ -79,19 +78,31 @@ class AboutIteration < Neo::Koan
 
     assert_equal "Clarence", array.find { |item| item.size > 4 }
   end
+```
 
+**inject**
+
+[...].inject (init_value)  {|accumulator, item|  sum + item  }
+
+- 为 |..|中的第一个变量设置初始值 accumulator = init_value
+- block 中计算的结果，存储到 accumulator 中
+
+```ruby
   def test_inject_will_blow_your_mind
     result = [2, 3, 4].inject(0) { |sum, item| sum + item }
     assert_equal 9, result
 
     result2 = [2, 3, 4].inject(1) { |product, item| product * item }
     assert_equal 24, result2
+```
 
-    # Extra Credit:
-    # Describe in your own words what inject does.
-  end
+**iteration 方法不只是作用于Array**
 
-  def test_all_iteration_methods_work_on_any_collection_not_just_arrays
+- Range 相当于一个集合
+- Files 相当于是 行的集合
+
+```ruby
+def test_all_iteration_methods_work_on_any_collection_not_just_arrays
     # Ranges act like a collection
     result = (1..3).map { |item| item + 10 }
     assert_equal [11, 12, 13], result
@@ -101,22 +112,7 @@ class AboutIteration < Neo::Koan
       upcase_lines = file.map { |line| line.strip.upcase }
       assert_equal ["THIS", "IS", "A", "TEST"], upcase_lines
     end
+```
 
-    # NOTE: You can create your own collections that work with each,
-    # map, select, etc.
-  end
 
-  # Bonus Question:  In the previous koan, we saw the construct:
-  #
-  #   File.open(filename) do |file|
-  #     # code to read 'file'
-  #   end
-  #
-  # Why did we do it that way instead of the following?
-  #
-  #   file = File.open(filename)
-  #   # code to read 'file'
-  #
-  # When you get to the "AboutSandwichCode" koan, recheck your answer.
 
-end
