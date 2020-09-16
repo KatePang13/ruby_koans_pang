@@ -1,11 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+### [ruby koan] about_block
 
-class AboutBlocks < Neo::Koan
-  def method_with_block
-    result = yield
-    result
-  end
+**block 的2种形式**
 
+- {...}
+- do ... end
+
+```ruby
   def test_methods_can_take_blocks
     yielded_result = method_with_block { 1 + 2 }
     assert_equal 3, yielded_result
@@ -15,9 +15,15 @@ class AboutBlocks < Neo::Koan
     yielded_result = method_with_block do 1 + 2 end
     assert_equal 3, yielded_result
   end
+```
 
-  # ------------------------------------------------------------------
+**block可以获取参数**
 
+- 通过 yield()  给 block 传参
+- yield() 可以多次调用，传递多个参数
+- 使用 ||  声明参数列表，比如  { |item|  access item }
+
+```ruby
   def method_with_block_arguments
     yield("Jim")
   end
@@ -27,9 +33,7 @@ class AboutBlocks < Neo::Koan
       assert_equal "Jim", argument
     end
   end
-
-  # ------------------------------------------------------------------
-
+  
   def many_yields
     yield(:peanut)
     yield(:butter)
@@ -42,9 +46,11 @@ class AboutBlocks < Neo::Koan
     many_yields { |item| result << item }
     assert_equal [:peanut, :butter, :and, :jelly], result
   end
+```
 
-  # ------------------------------------------------------------------
+**方法可以感知是否有使用block来调用**
 
+```ruby
   def yield_tester
     if block_given?
       yield
@@ -57,9 +63,15 @@ class AboutBlocks < Neo::Koan
     assert_equal :with_block, yield_tester { :with_block }
     assert_equal :no_block, yield_tester
   end
+```
 
-  # ------------------------------------------------------------------
+**block的一些性质**
 
+- 可以修改block外的变量
+- 可以被赋值成变量并显示调用
+- 可以作为参数，传递给期待block的函数
+
+```ruby
   def test_block_can_affect_variables_in_the_code_where_they_are_created
     value = :initial_value
     method_with_block { value = :modified_in_a_block }
@@ -94,3 +106,5 @@ class AboutBlocks < Neo::Koan
   end
 
 end
+```
+
