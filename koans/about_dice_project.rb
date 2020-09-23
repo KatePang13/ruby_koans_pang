@@ -2,9 +2,20 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 # Implement a DiceSet Class here:
 #
-# class DiceSet
-#   code ...
-# end
+class DiceSet
+  attr_reader :values
+
+  def roll(number)
+    # These methods return a new object of a specific class that represents the current object
+    # to_s  String
+    # to_i  Integer
+    # to_a  Array
+    # (beg..end).to_a   means   Range to Array [beg, .., end]  
+    # shuffle  https://apidock.com/ruby/Array/shuffle
+    @values = (1..number).to_a.shuffle
+ 
+  end
+end
 
 class AboutDiceProject < Neo::Koan
   def test_can_create_a_dice_set
